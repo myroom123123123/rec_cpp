@@ -1,21 +1,39 @@
 #include <iostream>
+#include<ctime>
 using namespace std;
 
-int sum(int a, int b) {
-	if (a == b) {
-		return a;
+int findSequence(int arr[], int start, int end, int sum, int minSum, int minIndex) {
+	if (start == end) {
+		return minIndex;
 	}
-	else {
-		return a + sum(a + 1, b);
+	if (sum < minSum) {
+		minSum = sum;
+		minIndex = start;
 	}
+	return findSequence(arr, start + 1, end, sum - arr[start] + arr[start + 10], minSum, minIndex);
 }
 
 int main() {
-	int a, b;
-	cout << "Enter a: ";
-	cin >> a;
-	cout << "Enter b: ";
-	cin >> b;
-	cout << "The sum of all numbers in the range from " << a << " to " << b << " is " << sum(a, b) << endl;
+	int arr[20];
+	srand(time(0));
+	for (int i = 0; i < 20; i++) {
+		arr[i] = rand() % 100;
+	}
+	for (int i = 0; i < 20; i++) {
+		cout << arr[i] << " ";
+	}
+	cout << endl;
+	int minSum = 0;
+	for (int i = 0; i < 10; i++) {
+		minSum += arr[i];
+	}
+	int minIndex = 0;
+	minIndex = findSequence(arr, 0, 10, minSum, minSum, minIndex);
+	cout << "Min sum: " << minSum << endl;
+	cout << "Min index: " << minIndex << endl;
+	for (int i = 0; i < 10; i++) {
+		cout << arr[minIndex + i] << " ";
+	}
+	cout << endl;
 	return 0;
 }
