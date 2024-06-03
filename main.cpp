@@ -1,19 +1,21 @@
 #include <iostream>
 using namespace std;
 
-void printStars(int n) {
-	if (n == 0) {
-		return;
+int sum(int a, int b) {
+	if (a == b) {
+		return a;
 	}
-	cout << "*";
-	printStars(n - 1);
+	else {
+		return a + sum(a + 1, b);
+	}
 }
 
 int main() {
-	int n;
-	cout << "Enter the number of stars: ";
-	cin >> n;
-	printStars(n);
-	cout << endl;
+	int a, b;
+	cout << "Enter a: ";
+	cin >> a;
+	cout << "Enter b: ";
+	cin >> b;
+	cout << "The sum of all numbers in the range from " << a << " to " << b << " is " << sum(a, b) << endl;
 	return 0;
 }
