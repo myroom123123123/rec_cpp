@@ -2,38 +2,19 @@
 #include<ctime>
 using namespace std;
 
-int findSequence(int arr[], int start, int end, int sum, int minSum, int minIndex) {
-	if (start == end) {
-		return minIndex;
+int gcd(int a, int b) {
+	if (b == 0) {
+		return a;
 	}
-	if (sum < minSum) {
-		minSum = sum;
-		minIndex = start;
-	}
-	return findSequence(arr, start + 1, end, sum - arr[start] + arr[start + 10], minSum, minIndex);
+	return gcd(b, a % b);
 }
 
 int main() {
-	int arr[20];
 	srand(time(0));
-	for (int i = 0; i < 20; i++) {
-		arr[i] = rand() % 100;
-	}
-	for (int i = 0; i < 20; i++) {
-		cout << arr[i] << " ";
-	}
-	cout << endl;
-	int minSum = 0;
-	for (int i = 0; i < 10; i++) {
-		minSum += arr[i];
-	}
-	int minIndex = 0;
-	minIndex = findSequence(arr, 0, 10, minSum, minSum, minIndex);
-	cout << "Min sum: " << minSum << endl;
-	cout << "Min index: " << minIndex << endl;
-	for (int i = 0; i < 10; i++) {
-		cout << arr[minIndex + i] << " ";
-	}
-	cout << endl;
+	int a = rand() % 100 + 1;
+	int b = rand() % 100 + 1;
+	cout << "The two numbers are " << a << " and " << b << endl;
+	int result = gcd(a, b);
+	cout << "The greatest common divisor of the two numbers is " << result << endl;
 	return 0;
 }
