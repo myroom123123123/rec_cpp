@@ -1,20 +1,53 @@
 #include <iostream>
-#include<ctime>
+#include <cstdlib>
+#include <ctime>
+#include <string>
+
 using namespace std;
 
-int gcd(int a, int b) {
-	if (b == 0) {
-		return a;
-	}
-	return gcd(b, a % b);
+string generateNumber() {
+    srand(static_cast<unsigned int>(time(0)));
+    string number = "";
+    for (int i = 0; i < 4; ++i) {
+        number += to_string(rand() % 10);
+    }
+    return number;
+}
+
+void countBullsAndCows(const string& guess, const string& secret, int& bulls, int& cows) {
+    bulls = 0;
+    cows = 0;
+    for (int i = 0; i < 4; ++i) {
+        if (guess[i] == secret[i]) {
+            ++bulls;
+        }
+        else if (secret.find(guess[i]) != string::npos) {
+            ++cows;
+        }
+    }
+}
+
+void playGame(const string& secret, int attempts) {
+    string guess;
+    cout << "Enter your four-digit guess: ";
+    cin >> guess;
+
+    int bulls, cows;
+    countBullsAndCows(guess, secret, bulls, cows);
+
+    if (bulls == 4) {
+        cout << "Congratulations! You guessed the number " << secret << " in " << attempts << " attempts." << endl;
+        return;
+    }
+    else {
+        cout << "Bulls: " << bulls << ", Cows: " << cows << endl;
+        playGame(secret, attempts + 1);
+    }
 }
 
 int main() {
-	srand(time(0));
-	int a = rand() % 100 + 1;
-	int b = rand() % 100 + 1;
-	cout << "The two numbers are " << a << " and " << b << endl;
-	int result = gcd(a, b);
-	cout << "The greatest common divisor of the two numbers is " << result << endl;
-	return 0;
+    string secretNumber = generateNumber();
+    cout << "The game \"Bulls and Cows\" has started! Guess the four-digit number." << endl;
+    playGame(secretNumber, 1);
+    return 0;
 }
